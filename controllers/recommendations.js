@@ -1,3 +1,3 @@
 module.exports = (req, res) => {
-  res.render('../views/recommendation.ejs', {});
+  res.render('../public/views/recommendation.ejs', {});
 };
