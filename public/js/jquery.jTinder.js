@@ -140,6 +140,7 @@
 								if($that.settings.onLike) {
 									$that.settings.onLike(panes.eq(current_pane));
 								}
+								console.log('like');
 								$that.next();
 							});
 						} else {
@@ -147,6 +148,7 @@
 								if($that.settings.onDislike) {
 									$that.settings.onDislike(panes.eq(current_pane));
 								}
+								console.log('dislike')
 								$that.next();
 							});
 						}
