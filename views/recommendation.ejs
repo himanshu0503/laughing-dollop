@@ -275,7 +275,7 @@
         <a href="#" class="like"><i></i></a>
     </div>
     -->
-    <!-- jTinder status text  
+    <!-- jTinder status text
     <div id="status"></div>
     -->
     <!-- jQuery lib -->
@@ -286,5 +286,44 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/do-web/jTinder/master/js/jquery.jTinder.js"></script>
     <!-- jTinder initialization script -->
     <script type="text/javascript" src="https://cdn.rawgit.com/do-web/jTinder/master/js/main.js"></script>
-</body>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyBtAnMGt1QsS_xh2DUmjblLUX61RBJw6Oo",
+        authDomain: "test-notifications-210209.firebaseapp.com",
+        databaseURL: "https://test-notifications-210209.firebaseio.com",
+        projectId: "test-notifications-210209",
+        storageBucket: "test-notifications-210209.appspot.com",
+        messagingSenderId: "684149880129"
+      };
+      firebase.initializeApp(config);
+      const messaging = firebase.messaging();
+      messaging.requestPermission().then(function() {
+        console.log('Notification permission granted.');
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // [START_EXCLUDE]
+        // In many cases once an app has been granted notification permission, it
+        // should update its UI reflecting this.
+        //resetUI();
+        // [END_EXCLUDE]
+        messaging.getToken().then(function(currentToken) {
+          if (currentToken)
+            console.log(currentToken);
+        }).catch(function(err) {
+          console.log('An error occurred while retrieving token. ', err);
+        });
+      }).catch(function(err) {
+        console.log('Unable to get permission to notify.', err);
+      });
+      messaging.onMessage(function(payload) {
+        var notificationTitle = payload.data.title;
+        var notification = new Notification(notificationTitle, payload.data);
+        notification.onclick = function(event) {
+          event.preventDefault(); // prevent the browser from focusing the Notification's tab
+          window.open(payload.data.link , '_blank');
+          notification.close();
+        }
+      });
+    </script>
+  </body>
 </html>
